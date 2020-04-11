@@ -4,19 +4,19 @@ import java.security.InvalidParameterException;
 
 public class Rectangle implements Polygon {
 
-    private float x_, y_;
-    private float width_, height_;
-    private int angle_;
+    private float x, y;
+    private float width, height;
+    private int angle;
 
     public Rectangle(float x, float y, float width, float height) {
         if (width <= 0 || height <= 0) {
             throw new InvalidParameterException("Invalid width or height!");
         }
-        x_ = x;
-        y_ = y;
-        width_ = width;
-        height_ = height;
-        angle_ = 0;
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+        this.angle = 0;
     }
 
     public Rectangle(float x, float y, float width, float height, int angle) {
@@ -24,31 +24,31 @@ public class Rectangle implements Polygon {
         if (angle < 0 || angle > 360) {
             throw new InvalidParameterException("Invalid angle!");
         }
-        angle_ = angle;
+        this.angle = angle;
     }
 
     @Override
     public float getX() {
-        return x_;
+        return this.x;
     }
 
     @Override
     public float getY() {
-        return y_;
+        return this.y;
     }
 
     @Override
     public float getArea() {
-        return width_ * height_;
+        return this.width * this.height;
     }
 
     @Override
     public int getRotation() {
-        return angle_;
+        return this.angle;
     }
 
     @Override
     public float getPerimeter() {
-        return (width_ + height_) * 2;
+        return (this.width + this.height) * 2;
     }
 }

@@ -4,35 +4,35 @@ import java.security.InvalidParameterException;
 
 public class Circle implements Ellipse {
 
-    private float x_, y_;
-    private float radius_;
+    private float x, y;
+    private float radius;
 
     public Circle(float x, float y, float radius) {
         if (radius <= 0) {
             throw new InvalidParameterException("Invalid radius!");
         }
-        x_ = x;
-        y_ = y;
-        radius_ = radius;
+        this.x = x;
+        this.y = y;
+        this.radius = radius;
     }
 
     @Override
     public float getX() {
-        return x_;
+        return this.x;
     }
 
     @Override
     public float getY() {
-        return y_;
+        return this.y;
     }
 
     @Override
     public float getArea() {
-        return (float) (Math.PI * Math.pow(radius_, 2));
+        return (float) (Math.PI * Math.pow(this.radius, 2));
     }
 
     @Override
     public float getLength() {
-        return (float) (2 * Math.PI * radius_);
+        return (float) (2 * Math.PI * this.radius);
     }
 }
