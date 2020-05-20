@@ -107,10 +107,11 @@ public class Controller {
             }
             try {
                 dataBase.addProduct(prodid, addTitleTextField.getText(), cost);
-                resultLabel.setText("Product added to data base");
-            } catch (InvalidParameterException e) {
-                resultLabel.setText(e.getMessage());
+            } catch (InvalidParameterException | SQLException e) {
+                resultLabel.setText("Invalid product!");
+                return;
             }
+            resultLabel.setText("Product added to data base");
             cleanALlTextFields();
         });
 
@@ -120,7 +121,7 @@ public class Controller {
                 if (result) {
                     resultLabel.setText("Product successfully deleted");
                 } else {
-                    resultLabel.setText("Product " + deleteTextField.getText() + " is missing!");
+                    resultLabel.setText(deleteTextField.getText() + " is missing!");
                 }
             } else {
                 resultLabel.setText("Enter product to delete!");
@@ -134,7 +135,7 @@ public class Controller {
                 if (cost != -1) {
                     resultLabel.setText("Product price: " + cost);
                 } else {
-                    resultLabel.setText("Product " + checkPriceTextField.getText() + " is missing!");
+                    resultLabel.setText(checkPriceTextField.getText() + " is missing!");
                 }
             } else {
                 resultLabel.setText("Enter product to check price!");
@@ -151,9 +152,13 @@ public class Controller {
                     resultLabel.setText("Invalid input!");
                     return;
                 }
-                boolean resultChangePrice = dataBase.changePrice(changePriceTitleTextField.getText(), cost);
-                if (!resultChangePrice) {
-                    resultLabel.setText("Product " + changePriceTitleTextField.getText() + " is missing!");
+                try {
+                    boolean resultChangePrice = dataBase.changePrice(changePriceTitleTextField.getText(), cost);
+                    if (!resultChangePrice) {
+                        resultLabel.setText(changePriceTitleTextField.getText() + " is missing!");
+                    }
+                } catch (InvalidParameterException e) {
+                    resultLabel.setText(e.getMessage());
                 }
             } else {
                 resultLabel.setText("Enter product to check price!");
