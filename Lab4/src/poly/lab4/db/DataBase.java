@@ -80,12 +80,13 @@ public class DataBase {
         try (PreparedStatement preparedStatement = connection.prepareStatement(FILTER_BY_PRICE_QUERY)) {
             preparedStatement.setInt(1, leftBorder);
             preparedStatement.setInt(2, rightBorder);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                System.out.println(resultSet.getInt("id") + "\t\t" +
-                        resultSet.getInt("prod_id") + "\t\t\t" +
-                        resultSet.getString("title") + "\t\t" +
-                        resultSet.getInt("cost"));
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    System.out.println(resultSet.getInt("id") + "\t\t" +
+                            resultSet.getInt("prod_id") + "\t\t\t" +
+                            resultSet.getString("title") + "\t\t" +
+                            resultSet.getInt("cost"));
+                }
             }
         }
     }
