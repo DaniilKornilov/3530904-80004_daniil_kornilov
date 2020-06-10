@@ -1,0 +1,123 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Departments</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <style>
+        body {
+            background: #00ffcb;
+        }
+
+        input {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<h2>Choose action:</h2>
+<div>
+    <input type="button" value="Show all" onclick="showAll()">
+    <input type="button" value="Delete all" onclick="deleteAll()">
+</div>
+<h2> ID search </h2>
+<div>
+    <input type="text" id="id" placeholder="Enter ID"/>
+    <input type="button" value="Search" onclick="getId()">
+    <input type="button" value="Delete" onclick="deleteById()">
+</div>
+<h2> Update department </h2>
+<div>
+    <input type="text" id="updateId" placeholder="Enter ID"/>
+    <input type="text" id="updateName" placeholder="Enter new name"/>
+    <input type="button" value="Update" onclick="updateById()">
+</div>
+<h2> Add new department </h2>
+<div>
+    <input type="text" id="addName" placeholder="Enter name"/>
+    <input type="button" value="Add" onclick="add()">
+</div>
+
+<input type="text" id="err" th:value="${err}" style="visibility:hidden;"/>
+<table id="table" border="1px black">
+    <caption><h2>Departments table</h2></caption>
+    <tr>
+        <th>ID</th>
+        <th>Department</th>
+    </tr>
+    <tr th:each="department : ${list}">
+        <td th:text="${department.getId()}"></td>
+        <td th:text="${department.getName()}"></td>
+    </tr>
+</table>
+<input type="button" value="Back" onclick="location.href='/'">
+</body>
+
+<script>
+    window.onload = init;
+
+    function init() {
+        if (document.getElementById("err").value === "0") {
+            alert("Успешно!");
+        }
+        if (document.getElementById("err").value === "-1") {
+            alert("Такого элемента не найдено.")
+        }
+        if (document.getElementById("err").value === "-2") {
+            alert("ID должен быть числом!")
+        }
+    }
+
+    function getId() {
+        let id = document.getElementById("id").value;
+        if (id === "") {
+            alert("Введите id!");
+            return;
+        }
+        document.location.href = "/departments/" + id;
+    }
+
+    function deleteById() {
+        let id = document.getElementById("id").value;
+        if (id === "") {
+            alert("Введите id!");
+            return;
+        }
+        document.location.href = "/departments/delete/" + id;
+    }
+
+    function deleteAll() {
+        document.location.href = "/departments/delete/";
+    }
+
+    function updateById() {
+        let id = document.getElementById("updateId").value;
+        if (id === "") {
+            alert("Введите id!");
+            return;
+        }
+        let name = document.getElementById("updateName").value;
+        if (name === "") {
+            alert("Введите имя!");
+            return;
+        }
+        document.location.href = "/departments/update/" + id + "/" + name;
+    }
+
+    function add() {
+        document.getElementById("table").style.display = "none";
+        let name = document.getElementById("addName").value;
+        if (name === "") {
+            alert("Название не может быть пустым!");
+            return;
+        }
+        document.location.href = "http://localhost:8080/departments/add?name=" + name;
+    }
+
+    function showAll() {
+        document.getElementById("table").style.display = "";
+        document.location.href = "http://localhost:8080/departments/all";
+    }
+
+</script>
+</html>

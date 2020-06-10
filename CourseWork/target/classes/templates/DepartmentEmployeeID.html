@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Departments_Employees ID search</title>
+    <style>
+        body {
+            background: #00ffcb;
+        }
+
+        input {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<h2> Found department-employees link: </h2>
+<div>
+    ID:
+    <text th:text="${depEmp.getId()}"></text>
+</div>
+<div>
+    Department ID:
+    <text th:text="${depEmp.getDepartmentId()}"></text>
+</div>
+<div>
+    Employee ID:
+    <text th:text="${depEmp.getEmployeeId()}"></text>
+</div>
+<p></p>
+<input type="button" value="Go back" onclick="location.href='/depEmps/main/1'">
+
+</body>
+</html>

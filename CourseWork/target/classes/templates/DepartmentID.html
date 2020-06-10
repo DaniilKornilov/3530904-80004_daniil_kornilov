@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Department by ID</title>
+    <style>
+        body {
+            background: #00ffcb;
+        }
+
+        input {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<h2> Found departments: </h2>
+<div>
+    ID:
+    <text th:text="${department.getId()}"></text>
+</div>
+<div>
+    Name:
+    <text th:text="${department.getName()}"></text>
+</div>
+
+<input type="button" value="Go back" onclick="location.href='/departments/main/1'">
+</body>
+</html>

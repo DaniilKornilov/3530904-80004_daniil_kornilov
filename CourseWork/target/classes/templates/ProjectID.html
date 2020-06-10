@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Project by ID</title>
+    <style>
+        body {
+            background: #00ffcb;
+        }
+
+        input {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<h2> Found project: </h2>
+<div>
+    ID:
+    <text th:text="${project.getId()}"></text>
+</div>
+<div>
+    Name:
+    <text th:text="${project.getName()}"></text>
+</div>
+<div>
+    Cost:
+    <text th:text="${project.getCost()}"></text>
+</div>
+<div>
+    Department:
+    <text th:text="${project.getDepId()}"></text>
+</div>
+<div>
+    Begin Date:
+    <text th:text="${project.getDateBeg()}"></text>
+</div>
+<div>
+    End Date:
+    <text th:text="${project.getDateEnd()}"></text>
+</div>
+<div>
+    Real End Date:
+    <text th:text="${project.getDateEndReal()}"></text>
+</div>
+
+<input type="button" value="Go back" onclick="location.href='/projects/main/1'">
+
+</body>
+</html>

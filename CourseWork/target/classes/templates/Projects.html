@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Projects</title>
+    <style>
+        body {
+            background: #00ffcb;
+        }
+
+        input {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<h2>Choose action:</h2>
+<div>
+    <input type="button" value="Show all" onclick="location.href='/projects/all'">
+    <input type="button" value="Delete all" onclick="deleteAll()">
+</div>
+<h2> Search </h2>
+<div>
+    <label for="id"></label><input type="text" id="id" placeholder="Enter ID"/>
+    <input type="button" value="Search" onclick="getId()">
+    <input type="button" value="Delete" onclick="deleteById()">
+</div>
+<h2> Update project (leave empty if nothing to update)(enter date: YYYY/MM/DD)</h2>
+<div>
+    <label for="updateId"></label><input type="text" id="updateId" placeholder="Enter ID"/>
+    <label for="updateName"></label><input type="text" id="updateName" placeholder="Enter new name"/>
+    <label for="updateCost"></label><input type="text" id="updateCost" placeholder="Enter new cost"/>
+    <label for="updateDepId"></label><input type="text" id="updateDepId" placeholder="Enter new DepID"/>
+    <label for="updateDateBeg"></label><input type="text" id="updateDateBeg" placeholder="Enter begin date"/>
+    <label for="updateDateEnd"></label><input type="text" id="updateDateEnd" placeholder="Enter end date"/>
+    <label for="updateDateEndReal"></label><input type="text" id="updateDateEndReal"
+                                                  placeholder="Enter real end date"/>
+    <input type="button" value="Update" onclick="updateById()">
+</div>
+<h2> Add project </h2>
+<div>
+    <label for="addName"></label><input type="text" id="addName" placeholder="Enter name"/>
+    <label for="addCost"></label><input type="text" id="addCost" placeholder="Enter cost"/>
+    <label for="addDepId"></label><input type="text" id="addDepId" placeholder="Enter DepID"/>
+    <label for="addDateBeg"></label><input type="text" id="addDateBeg" placeholder="Enter begin date"/>
+    <label for="addDateEnd"></label><input type="text" id="addDateEnd" placeholder="Enter end date"/>
+    <label for="addDateEndReal"></label><input type="text" id="addDateEndReal" placeholder="Enter real end date"/>
+    <input type="button" value="Add" onclick="add()">
+</div>
+
+<table border="1px black">
+    <caption><h2>Employees-Departments table</h2></caption>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Cost</th>
+        <th>Department ID</th>
+        <th>Date begin</th>
+        <th>Date end</th>
+        <th>Real date end</th>
+    </tr>
+    <tr th:each="project : ${list}">
+        <td th:text="${project.getId()}"></td>
+        <td th:text="${project.getName()}"></td>
+        <td th:text="${project.getCost()}"></td>
+        <td th:text="${project.getDepId()}"></td>
+        <td th:text="${project.getDateBeg()}"></td>
+        <td th:text="${project.getDateEnd()}"></td>
+        <td th:text="${project.getDateEndReal()}"></td>
+
+</table>
+
+<input type="button" value="Go back" onclick="location.href='/'">
+
+<label for="err"></label><input type="text" id="err" th:value="${err}" style="visibility:hidden;"/>
+</body>
+
+<script>
+    window.onload = init;
+
+    function init() {
+        if (document.getElementById("err").value === "0") {
+            alert("Успешно!");
+        }
+        if (document.getElementById("err").value === "-1") {
+            alert("Такого элемента не найдено.")
+        }
+        if (document.getElementById("err").value === "-2") {
+            alert("ID должен быть числом!")
+        }
+        if (document.getElementById("err").value === "-3") {
+            alert("Стоимость должена быть числом!")
+        }
+        if (document.getElementById("err").value === "-4") {
+            alert("Неправильный формат даты!")
+        }
+        if (document.getElementById("err").value === "-5") {
+            alert("Такого отдела не существует!")
+        }
+    }
+
+    function getId() {
+        let id = document.getElementById("id").value;
+        if (id === "") {
+            alert("Введите id!");
+            return;
+        }
+        document.location.href = "/projects/" + id;
+    }
+
+    function deleteById() {
+        let id = document.getElementById("id").value;
+        if (id === "") {
+            alert("Введите id!");
+            return;
+        }
+        document.location.href = "/projects/delete/" + id;
+    }
+
+    function deleteAll() {
+        document.location.href = "/projects/delete/";
+    }
+
+    function updateById() {
+        let id = document.getElementById("updateId").value;
+        let name = document.getElementById("updateName").value;
+        let cost = document.getElementById("updateCost").value;
+        let depId = document.getElementById("updateDepId").value;
+        let dateBeg = document.getElementById("updateDateBeg").value;
+        let dateEnd = document.getElementById("updateDateEnd").value;
+        let dateEndReal = document.getElementById("updateDateEndReal").value;
+        if (id === "") {
+            alert("Введите id!");
+            return;
+        }
+
+        document.location.href = "http://localhost:8080/projects/update/" + id + "?name=" + name + "&cost=" + cost + "&depId=" + depId + "&dateBeg=" + dateBeg + "&dateEnd=" + dateEnd + "&dateEndReal=" + dateEndReal;
+    }
+
+    function add() {
+        let name = document.getElementById("addName").value;
+        let cost = document.getElementById("addCost").value;
+        let depId = document.getElementById("addDepId").value;
+        let dateBeg = document.getElementById("addDateBeg").value;
+        let dateEnd = document.getElementById("addDateEnd").value;
+        let dateEndReal = document.getElementById("addDateEndReal").value;
+        if (name === "" || cost === "" || depId === "" || dateBeg === "" || dateEnd === "" || dateEndReal === "") {
+            alert("Ни одно из полей не может быть пустым!");
+            return;
+        }
+        document.location.href = "http://localhost:8080/projects/add?name=" + name + "&cost=" + cost + "&depId=" + depId + "&dateBeg=" + dateBeg + "&dateEnd=" + dateEnd + "&dateEndReal=" + dateEndReal;
+    }
+
+</script>
+</html>

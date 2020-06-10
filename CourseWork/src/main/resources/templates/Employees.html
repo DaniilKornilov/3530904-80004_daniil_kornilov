@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Employees</title>
+    <style>
+        body {
+            background: #00ffcb;
+        }
+
+        input {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<h2>Choose action:</h2>
+<div>
+    <input type="button" value="Show all" onclick="location.href='/employees/all'">
+    <input type="button" value="Delete all" onclick="deleteAll()">
+</div>
+<h2> Search </h2>
+<div>
+    <input type="text" id="id" placeholder="Enter ID"/>
+    <input type="button" value="Search" onclick="getId()">
+    <input type="button" value="Delete" onclick="deleteById()">
+</div>
+<h2> Update employee (leave empty if nothing to update)</h2>
+<div>
+    <input type="text" id="updateId" placeholder="Enter ID"/>
+    <input type="text" id="updatefName" placeholder="Enter new name"/>
+    <input type="text" id="updatelName" placeholder="Enter new last name"/>
+    <input type="text" id="updatepName" placeholder="Enter new father name"/>
+    <input type="text" id="updatePosition" placeholder="Enter new position"/>
+    <input type="text" id="updateSalary" placeholder="Enter new salary"/>
+    <input type="button" value="Update" onclick="updateById()">
+</div>
+<h2> Add employee </h2>
+<div>
+    <input type="text" id="addfName" placeholder="Enter name"/>
+    <input type="text" id="addlName" placeholder="Enter last name"/>
+    <input type="text" id="addpName" placeholder="Enter father name"/>
+    <input type="text" id="addPosition" placeholder="Enter position"/>
+    <input type="text" id="addSalary" placeholder="Enter salary"/>
+    <input type="button" value="Add" onclick="add()">
+</div>
+
+<table border="1px black">
+    <caption><h2>Employees-Departments table</h2></caption>
+    <tr>
+        <th>ID</th>
+        <th>First name</th>
+        <th>Last name</th>
+        <th>Father name</th>
+        <th>Position</th>
+        <th>Salary</th>
+    </tr>
+    <tr th:each="employee : ${list}">
+        <td th:text="${employee.getId()}"></td>
+        <td th:text="${employee.getFirstName()}"></td>
+        <td th:text="${employee.getLastName()}"></td>
+        <td th:text="${employee.getFatherName()}"></td>
+        <td th:text="${employee.getPosition()}"></td>
+        <td th:text="${employee.getSalary()}"></td>
+
+</table>
+
+<input type="button" value="Go back" onclick="location.href='/'">
+<input type="text" id="err" th:value="${err}" style="visibility:hidden;"/>
+
+</body>
+
+<script>
+    window.onload = init;
+
+    function init() {
+        if (document.getElementById("err").value === "0") {
+            alert("Успешно!");
+        }
+        if (document.getElementById("err").value === "-1") {
+            alert("Такого элемента не найдено.")
+        }
+        if (document.getElementById("err").value === "-2") {
+            alert("ID должен быть числом!")
+        }
+        if (document.getElementById("err").value === "-3") {
+            alert("Оклад должен быть числом!")
+        }
+    }
+
+    function getId() {
+        let id = document.getElementById("id").value;
+        if (id === "") {
+            alert("Введите id!");
+            return;
+        }
+        document.location.href = "/employees/" + id;
+    }
+
+    function deleteById() {
+        let id = document.getElementById("id").value;
+        if (id === "") {
+            alert("Введите id!");
+            return;
+        }
+        document.location.href = "/employees/delete/" + id;
+    }
+
+    function deleteAll() {
+        document.location.href = "/employees/delete/";
+    }
+
+    function updateById() {
+        let id = document.getElementById("updateId").value;
+        let fName = document.getElementById("updatefName").value;
+        let lName = document.getElementById("updatelName").value;
+        let pName = document.getElementById("updatepName").value;
+        let pos = document.getElementById("updatePosition").value;
+        let sal = document.getElementById("updateSalary").value;
+        if (id === "") {
+            alert("Введите id!");
+            return;
+        }
+
+        document.location.href = "http://localhost:8080/employees/update/" + id + "?fName=" + fName + "&lName=" + lName + "&pName=" + pName + "&position=" + pos + "&salary=" + sal;
+    }
+
+    function add() {
+        let fName = document.getElementById("addfName").value;
+        let lName = document.getElementById("addlName").value;
+        let pName = document.getElementById("addpName").value;
+        let pos = document.getElementById("addPosition").value;
+        let sal = document.getElementById("addSalary").value;
+        if (fName === "" || lName === "" || pName === "" || pos === "" || sal === "") {
+            alert("Ни одно из полей не может быть пустым!");
+            return;
+        }
+        document.location.href = "http://localhost:8080/employees/add?fName=" + fName + "&lName=" + lName + "&pName=" + pName + "&position=" + pos + "&salary=" + sal;
+    }
+
+</script>
+</html>

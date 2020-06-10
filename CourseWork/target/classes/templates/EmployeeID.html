@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee by ID</title>
+    <style>
+        body {
+            background: #00ffcb;
+        }
+
+        input {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+<h2> Found Employee: </h2>
+<div>
+    ID:
+    <text th:text="${employee.getId()}"></text>
+</div>
+<div>
+    First Name:
+    <text th:text="${employee.getFirstName()}"></text>
+</div>
+<div>
+    Last name:
+    <text th:text="${employee.getLastName()}"></text>
+</div>
+<div>
+    Father name:
+    <text th:text="${employee.getFatherName()}"></text>
+</div>
+<div>
+    Position:
+    <text th:text="${employee.getPosition()}"></text>
+</div>
+<div>
+    Salary:
+    <text th:text="${employee.getSalary()}"></text>
+</div>
+<input type="button" value="Go back" onclick="location.href='/employees/main/1'">
+</body>
+</html>
